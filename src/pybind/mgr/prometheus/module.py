@@ -43,10 +43,11 @@ def health_status_to_number(status):
     elif status == 'HEALTH_ERR':
         return 2
 
+
 PG_STATES = ['creating', 'active', 'clean', 'down', 'scrubbing', 'deep', 'degraded',
-        'inconsistent', 'peering', 'repair', 'recovering', 'forced-recovery',
-        'backfill', 'forced-backfill', 'wait-backfill', 'backfill-toofull',
-        'incomplete', 'stale', 'remapped', 'undersized', 'peered']
+             'inconsistent', 'peering', 'repair', 'recovering', 'forced-recovery',
+             'backfill', 'forced-backfill', 'wait-backfill', 'backfill-toofull',
+             'incomplete', 'stale', 'remapped', 'undersized', 'peered']
 
 DF_CLUSTER = ['total_bytes', 'total_used_bytes', 'total_objects']
 
@@ -250,7 +251,7 @@ class Module(MgrModule):
     def get_pg_status(self):
         # TODO add per pool status?
         pg_s = self.get('pg_summary')['all']
-        reported_pg_s = [(s,v) for key, v in pg_s.items() for s in
+        reported_pg_s = [(s, v) for key, v in pg_s.items() for s in
                          key.split('+')]
         for state, value in reported_pg_s:
             path = 'pg_{}'.format(state)
@@ -316,7 +317,7 @@ class Module(MgrModule):
                 ))
             else:
                 self.log.info("Missing dev node metadata for osd {0}, skipping "
-                               "occupation record for this osd".format(id_))
+                              "occupation record for this osd".format(id_))
 
         for pool in osd_map['pools']:
             id_ = pool['pool']
@@ -382,11 +383,11 @@ class Module(MgrModule):
             def index(self):
                 return '''<!DOCTYPE html>
 <html>
-	<head><title>Ceph Exporter</title></head>
-	<body>
-		<h1>Ceph Exporter</h1>
-		<p><a href='/metrics'>Metrics</a></p>
-	</body>
+    <head><title>Ceph Exporter</title></head>
+    <body>
+        <h1>Ceph Exporter</h1>
+        <p><a href='/metrics'>Metrics</a></p>
+    </body>
 </html>'''
 
             @cherrypy.expose
@@ -451,11 +452,11 @@ class StandbyModule(MgrStandbyModule):
                 active_uri = module.get_active_uri()
                 return '''<!DOCTYPE html>
 <html>
-	<head><title>Ceph Exporter</title></head>
-	<body>
-		<h1>Ceph Exporter</h1>
+    <head><title>Ceph Exporter</title></head>
+    <body>
+        <h1>Ceph Exporter</h1>
         <p><a href='{}metrics'>Metrics</a></p>
-	</body>
+    </body>
 </html>'''.format(active_uri)
 
             @cherrypy.expose
